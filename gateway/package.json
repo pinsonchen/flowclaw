@@ -1,0 +1,14 @@
+{
+  "name": "flowclaw-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FlowClaw 消息网关 - 统一消息接入层",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "grammy": "^1.20.0"
+  }
+}
