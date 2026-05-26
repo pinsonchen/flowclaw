@@ -1,26 +1,16 @@
 {
-  "name": "skyflip-devbuddy",
+  "name": "flowclaw",
+  "private": true,
   "version": "0.1.0",
-  "description": "AI协作开发助手 - 智能项目搭子",
-  "bin": {
-    "devbuddy": "./bin/devbuddy.js"
-  },
+  "description": "跨平台 AI 工作流引擎",
   "scripts": {
-    "start": "node bin/devbuddy.js",
-    "test": "node --test tests/",
-    "lint": "eslint src/",
-    "release": "standard-version"
-  },
-  "dependencies": {
-    "commander": "^12.0.0",
-    "chalk": "^5.3.0",
-    "ora": "^8.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^9.0.0",
-    "standard-version": "^9.5.0"
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
   }
 }

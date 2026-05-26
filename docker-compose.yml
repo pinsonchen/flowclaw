@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: flowclaw
+      POSTGRES_USER: flowclaw
+      POSTGRES_PASSWORD: flowclaw
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  gateway:
+    build:
+      context: .
+      dockerfile: packages/gateway/Dockerfile
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_WEBHOOK_URL=${TELEGRAM_WEBHOOK_URL}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ENGINE_URL=http://engine:3000
+    ports:
+      - "3001:3001"
+    depends_on:
+      - redis
+      - engine
+
+  engine:
+    build:
+      context: .
+      dockerfile: packages/engine/Dockerfile
+    environment:
+      - ENGINE_PORT=3000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+volumes:
+  redis_data:
+  pg_data:
